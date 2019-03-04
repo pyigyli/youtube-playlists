@@ -24,16 +24,18 @@ export default {
 		ytp: merge(commonytpStyles, {
 			text: {
 				primary: '#000000de',
-				secondary: '#000000de'
+				secondary: '#585858de',
+				unsubscribeLink: '#ad0000',
+				unsubscribeLinkHover: '#ee0000'
 			},
 			body: {background: '#efefef'},
 			header: {
-				background: '#efefef',
+				background: '#ffffff',
 				input: {
-					background: '#ffffffcc'
+					background: '#efefef'
 				},
 				button: {
-					background: '#3f3f3f'
+					background: '#ffffffff'
 				}
 			}
 		})
@@ -42,7 +44,9 @@ export default {
 		ytp: merge(commonytpStyles, {
 			text: {
 				primary: '#ffffffcc',
-				secondary: '#999999'
+				secondary: '#999999',
+				unsubscribeLink: '#ad0000',
+				unsubscribeLinkHover: '#ee0000'
 			},
 			body: {background: 'hsl(0, 0%, 7%)'},
 			header: {

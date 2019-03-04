@@ -1,4 +1,4 @@
-Small web app that allows the user to subscribe specific Youtube playlists by their ids. The app is hosted at Firebase and uses Firebase for data storage. Project is working for it's purpose, but I'm planning on adding more features.
+Small web app that allows the user to subscribe specific Youtube playlists by their ids. The app can be hosted at Firebase and it uses Firebase for data storage. Project is working for it's purpose, but I might add some more functionality in the future. I'm not sharing my own link due to the limits that free-to-use firebase sets. But you are free to clone the projectory and get your own copy.
 
 **Note:**
 
