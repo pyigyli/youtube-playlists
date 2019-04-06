@@ -105,10 +105,7 @@ class VideoLister extends React.Component {
 								</a>
 								<p
 									className={classes.unsubscribeLink}
-									onClick={() => {
-										this.props.removePlaylist(video.snippet.playlistId);
-										window.location.reload();
-									}}
+									onClick={() => {this.props.removePlaylist(video.snippet.playlistId)}}
 								>
 									Unsubscribe
 								</p>

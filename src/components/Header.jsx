@@ -30,9 +30,8 @@ class Header extends React.Component {
 	state = {input: ''}
 
 	handleClickSubmit = () => {
-		if (this.state.input.length === 34) {
+		if (this.state.input.length > 0) {
 			this.props.addPlaylist(this.state.input);
-			window.location.reload();
 		}
 	}
 

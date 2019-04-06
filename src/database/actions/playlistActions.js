@@ -3,7 +3,7 @@ export const addPlaylist = (id) => {
 		const firestore = getFirestore();
 		const playlist = {id: id}
 		firestore.collection('playlist').doc(id).set(playlist).then(() => {
-			dispatch({type: 'ADD_PLAYLIST', playlist});
+			dispatch({type: 'ADD_PLAYLIST', playlist: playlist});
 		})
 	}
 }
@@ -13,7 +13,7 @@ export const removePlaylist = (id) => {
 		const firestore = getFirestore();
 		const playlist = {id: id}
 		firestore.collection('playlist').doc(id).delete().then(() => {
-			dispatch({type: 'REMOVE_PLAYLIST', playlist});
+			dispatch({type: 'REMOVE_PLAYLIST', playlist: playlist});
 		})
 	}
 }

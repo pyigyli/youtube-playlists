@@ -24,9 +24,5 @@ yarn-error.log*
 
 # My files and folders
 /.firebase
-/src/ApiConfig.ts
 /src/database/apiConfig.js
 .firebaserc
-database.rules.json
-firestore.indexes.json
-firestore.rules
