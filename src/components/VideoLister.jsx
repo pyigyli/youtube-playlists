@@ -52,10 +52,11 @@ const styles = theme => createStyles({
 });
 
 class VideoLister extends React.Component {
-	state = {videos: []}
+	state = {videos: [], loading: true}
 
 	componentDidUpdate = prevProps => {
-		if (this.props.playlists && this.props.playlists !== prevProps.playlists) {
+		if (this.state.loading) {
+			this.setState({loading: false});
 			const {YoutubeDataAPI} = require('youtube-v3-api');
 			const api = new YoutubeDataAPI(YoutubeApiKey);
 			Object.values(this.props.playlists).forEach(playlist => {
