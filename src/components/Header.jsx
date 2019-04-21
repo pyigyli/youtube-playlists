@@ -3,7 +3,7 @@ import { createStyles, withStyles, InputBase, InputAdornment, Button } from '@ma
 import { connect } from 'react-redux'
 import { addPlaylist } from '../database/actions/playlistActions'
 
-const styles = (theme) => createStyles({
+const styles = theme => createStyles({
 	headerContainer: {
 		background: theme.ytp.header.background,
 		color: theme.ytp.text.primary,
@@ -30,22 +30,21 @@ class Header extends React.Component {
 	state = {input: ''}
 
 	handleClickSubmit = () => {
-		if (this.state.input.length > 0) {
+		if (this.state.input.length === 34 || this.state.input.length === 24) {
 			this.props.addPlaylist(this.state.input);
+			this.props.updatePlaylist(this.state.input);
 		}
 	}
 
-	handleKeyDown = (e) => {
-		if (e.key === 'Enter') {
-			e.preventDefault();
-			e.stopPropagation();
+	handleKeyDown = event => {
+		if (event.key === 'Enter') {
+			event.preventDefault();
+			event.stopPropagation();
 			this.handleClickSubmit();
 		}
 	}
 
-	handleInputChange = (evt) => {
-		this.setState({input: evt.target.value});
-	}
+	handleInputChange = event => this.setState({input: event.target.value});
 
 	render() {
 		const {classes} = this.props;
@@ -74,8 +73,8 @@ class Header extends React.Component {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {
-	return {addPlaylist: (id) => dispatch(addPlaylist(id))}
+const mapDispatchToProps = dispatch => {
+	return {addPlaylist: id => dispatch(addPlaylist(id))}
 }
 
 export default withStyles(styles)(connect(null, mapDispatchToProps)(Header));

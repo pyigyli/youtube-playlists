@@ -11,7 +11,7 @@ import { reduxFirestore, getFirestore } from 'redux-firestore'
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase'
 import firebaseConfig from '../database/apiConfig'
 
-const styles = (theme) => createStyles({
+const styles = theme => createStyles({
 	body: {
 		background: theme.ytp.body.background,
 		width: '100%',
@@ -30,13 +30,25 @@ const store = createStore(
 	);
 
 class App extends React.Component {
+	state = {updateId: ''}
+
+	updatePlaylist = id => this.setState({updateId: id});
+
+	onUpdate = () => this.setState({updateId: ''});
+
 	render() {
-		const {classes, onChangeTheme} = this.props;
+		const {classes} = this.props;
+		const {updateId} = this.state;
 
 		return (
 			<div className={classes.body}>
-				<Header onChangeTheme={onChangeTheme}/>
-				<VideoLister/>
+				<Header
+					updatePlaylist={this.updatePlaylist}
+				/>
+				<VideoLister
+					updateId={updateId}
+					onUpdate={this.onUpdate}
+				/>
 			</div>
 		);
 	}
@@ -47,15 +59,11 @@ const AppWithProps = withStyles(styles)(App);
 class AppWrapper extends React.Component {
 	state = {theme: 'dark'};
 
-	changeTheme = (theme) => {
-		this.setState({ theme });
-	}
-
 	render() {
 		return (
 			<MuiThemeProvider theme={themes[this.state.theme]}>
 				<Provider store={store}>
-					<AppWithProps onChangeTheme={this.changeTheme} />
+					<AppWithProps/>
 				</Provider>
 			</MuiThemeProvider>
 		);

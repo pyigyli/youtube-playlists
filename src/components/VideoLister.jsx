@@ -6,7 +6,7 @@ import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { removePlaylist } from '../database/actions/playlistActions'
 
-const styles = (theme) => createStyles({
+const styles = theme => createStyles({
 	videoListContainer: {
 		background: theme.ytp.body.background,
 		color: theme.ytp.text.primary,
@@ -52,35 +52,42 @@ const styles = (theme) => createStyles({
 });
 
 class VideoLister extends React.Component {
-	state = {videos: [], loading: true}
+	state = {videos: []}
 
-	componentDidUpdate() {
-		if (this.state.loading) {
-			this.setState({loading: false});
+	componentDidUpdate = prevProps => {
+		if (this.props.playlists && this.props.playlists !== prevProps.playlists) {
 			const {YoutubeDataAPI} = require('youtube-v3-api');
 			const api = new YoutubeDataAPI(YoutubeApiKey);
-			Object.values(this.props.playlists).forEach((playlist) => {
-				api.searchPlaylistItems(playlist.id, 20, {part: 'snippet'}).then((data) => {
-					data.items.forEach((video) => {
-						this.setState({videos: [...this.state.videos, video]});
-					});
+			Object.values(this.props.playlists).forEach(playlist => {
+				api.searchPlaylistItems(playlist.id, 20, {part: 'snippet'}).then(data => {
+					data.items.forEach(video => this.setState({videos: [...this.state.videos, video]}));
 				});
 			});
 		}
+		if (this.props.updateId && this.props.updateId !== prevProps.updateId) {
+			this.props.onUpdate();
+			const {YoutubeDataAPI} = require('youtube-v3-api');
+			const api = new YoutubeDataAPI(YoutubeApiKey);
+			api.searchPlaylistItems(this.props.updateId, 20, {part: 'snippet'}).then(data => {
+				data.items.forEach(video => this.setState({videos: [...this.state.videos, video]}));
+			});
+		}
+	}
+
+	removePlaylist = event => {
+		this.props.removePlaylist(event.target.id);
+		const videos = this.state.videos.filter(video => video.snippet.playlistId !== event.target.id);
+		this.setState({videos: videos});
 	}
 
 	render() {
 		const {classes} = this.props;
 		const {videos} = this.state;
 
-		if (videos.length > 0) {
+		if (videos.length > 1) {
 			videos.sort((a, b) => {
-				if (a.snippet.publishedAt < b.snippet.publishedAt) {
-					return 1;
-				}
-				if (a.snippet.publishedAt > b.snippet.publishedAt) {
-					return -1;
-				}
+				if (a.snippet.publishedAt < b.snippet.publishedAt) return 1;
+				if (a.snippet.publishedAt > b.snippet.publishedAt) return -1;
 				return 0;
 			});
 		}
@@ -105,7 +112,8 @@ class VideoLister extends React.Component {
 								</a>
 								<p
 									className={classes.unsubscribeLink}
-									onClick={() => {this.props.removePlaylist(video.snippet.playlistId)}}
+									id={video.snippet.playlistId}
+									onClick={event => this.removePlaylist(event)}
 								>
 									Unsubscribe
 								</p>
@@ -118,18 +126,12 @@ class VideoLister extends React.Component {
 	}
 }
 
-const mapStateToProps = (state) => {
-	return {playlists: state.firestore.ordered.playlist}
-}
+const mapStateToProps = state => {return {playlists: state.firestore.ordered.playlist}}
 
-const mapDispatchToProps = (dispatch) => {
-	return {removePlaylist: (id) => dispatch(removePlaylist(id))}
-}
+const mapDispatchToProps = dispatch => {return {removePlaylist: id => dispatch(removePlaylist(id))}}
 
 export default compose(
 	withStyles(styles),
 	connect(mapStateToProps, mapDispatchToProps),
-	firestoreConnect([
-		{collection: 'playlist'}
-	])
+	firestoreConnect([{collection: 'playlist'}])
 )(VideoLister);
