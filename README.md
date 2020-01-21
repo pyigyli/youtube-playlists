@@ -1,5 +1,7 @@
 # Youtube Playlists
 
+https://playlists-225000.firebaseapp.com/
+
 Small web app that allows users to subscribe specific Youtube playlists by their ids.
 
 ### Usage:

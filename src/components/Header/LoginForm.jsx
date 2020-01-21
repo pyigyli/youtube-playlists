@@ -49,6 +49,7 @@ const LoginForm = () => {
       />
       <InputBase
         className='input'
+        type='password'
         placeholder='Password'
         onKeyDown={handleEnterKey}
         value={password}
