@@ -1,6 +1,13 @@
-Small web app that allows the user to subscribe specific Youtube playlists by their ids. The app can be hosted at Firebase and it uses Firebase for data storage. Project is working for it's purpose, but I might add some more functionality in the future. I'm not sharing my own link due to the limits that free-to-use firebase sets. But you are free to clone the projectory and get your own copy.
+# Youtube Playlists
 
-**Note:**
+Small web app that allows users to subscribe specific Youtube playlists by their ids.
 
-If you want to clone and use this app yourself, you'll have to change the name of *ApiConfigTemplate.ts* to *ApiConfig.ts* and add your own api keys and such.
-Also, you need to generate your own firebase files.
+### Usage:
+
+Create a new user for yourself. Your password will be crypted and you can add playlists and come back to check any new updates whenever you want. Any error messages will show up in the console for now.
+
+### Todo:
+
+- Optional Cookies to remember your login.
+- Better error messages.
+- Improve the style and looks.

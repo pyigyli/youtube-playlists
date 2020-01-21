@@ -1,0 +1,11 @@
+.logoutFormContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.username {
+  font-size: large;
+  font-weight: bold;
+  align-self: center;
+  margin-right: 1rem;
+}
