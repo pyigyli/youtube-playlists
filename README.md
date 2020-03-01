@@ -10,6 +10,5 @@ Create a new user for yourself. Your password will be crypted and you can add pl
 
 ### Todo:
 
-- Optional Cookies to remember your login.
 - Better error messages.
 - Improve the style and looks.

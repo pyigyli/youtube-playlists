@@ -11,7 +11,7 @@ export const createUser = async (username, password) => {
     }
     const salt = await bcrypt.genSalt()
     const passwordHash = await bcrypt.hash(password, salt)
-    const ref = db.ref(`users`).push({
+    db.ref(`users`).push({
       username,
       passwordHash
     })
@@ -37,6 +37,27 @@ export const loginUser = async (username, password) => {
     const userSnapshot = await db.ref('users').orderByChild('username').equalTo(username).once('value')
     let user = userSnapshot.toJSON()
     if (user && await bcrypt.compare(password, Object.values(user)[0].passwordHash)) {
+      const id = Object.keys(user)[0]
+      const token = jwt.sign(id, 'Super Secret')
+      await db.ref(`users/${id}/token`).set(token)
+      return {
+        username: Object.values(user)[0].username,
+        token,
+        id
+      }
+    }
+    return null
+  } catch (err) {
+    console.log('Unable to reach database.')
+    console.error(err)
+  }
+}
+
+export const loginFromCookies = async (username) => {
+  try {
+    const userSnapshot = await db.ref('users').orderByChild('username').equalTo(username).once('value')
+    let user = userSnapshot.toJSON()
+    if (user) {
       const id = Object.keys(user)[0]
       const token = jwt.sign(id, 'Super Secret')
       await db.ref(`users/${id}/token`).set(token)

@@ -1,4 +1,4 @@
-import {createUser, deleteUser, loginUser, logoutUser} from '../firebase/database/users'
+import {createUser, deleteUser, loginUser, loginFromCookies, logoutUser} from '../firebase/database/users'
 import {addPlaylist, getPlaylists, removePlaylist} from '../firebase/database/playlists'
 
 export const userReducer = async (state, action) => {
@@ -9,6 +9,8 @@ export const userReducer = async (state, action) => {
       return await deleteUser(action.id)
     case 'LOGIN':
       return await loginUser(action.username, action.password)
+    case 'AUTOLOGIN':
+      return await loginFromCookies(action.username)
     case 'LOGOUT':
       return await logoutUser(action.id)
     default:
